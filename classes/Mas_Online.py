@@ -1,4 +1,4 @@
-from Product_Scrapper import Product_Scrapper
+from classes.Product_Scrapper import Product_Scrapper
 import time
 import pandas as pd
 from bs4 import BeautifulSoup
