@@ -1,0 +1,34 @@
+services:
+  app:
+    build: .
+    container_name: market_scrapper_app
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/market_scrapper
+    volumes:
+      - .:/app
+    networks:
+      - market_scrapper_network
+    command: python app/main.py
+
+  db:
+    image: postgres:13
+    container_name: market_scrapper_db
+    environment:
+      POSTGRES_USER: postgresup
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: market_scrapper
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - market_scrapper_network
+
+networks:
+  market_scrapper_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
