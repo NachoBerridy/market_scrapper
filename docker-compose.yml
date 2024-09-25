@@ -4,8 +4,8 @@ services:
     container_name: market_scrapper_app
     depends_on:
       - db
-    environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/market_scrapper
+    env_file:
+      - .env
     volumes:
       - .:/app
     networks:
@@ -16,9 +16,9 @@ services:
     image: postgres:13
     container_name: market_scrapper_db
     environment:
-      POSTGRES_USER: postgresup
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: market_scrapper
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
     ports:
       - "5432:5432"
     volumes:

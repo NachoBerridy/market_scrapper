@@ -1,14 +1,18 @@
+from sqlalchemy import create_engine
 import os
-import psycopg2
-from psycopg2.extras import RealDictCursor
-
-# Conexión a la base de datos usando la URL de la base de datos desde la variable de entorno
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", "postgresql://postgres:password@db:5432/market_scrapper"
-)
 
 
-def get_connection():
-    """Establece y devuelve una conexión a la base de datos."""
-    conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+def get_connection() -> create_engine:
+    """
+    Get connection to database
+    """
+    # Get credentials from environment variables
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+    print(f"Connecting to {DATABASE_URL}")
+
+    engine = create_engine(DATABASE_URL)
+
+    conn = engine.connect()
+
     return conn
